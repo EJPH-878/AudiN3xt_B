@@ -4,7 +4,11 @@ WORKDIR /app
 # Copiamos los archivos de configuración de Maven
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
-# Descargamos dependencias (esto hace que la siguiente vez sea más rápido)
+
+# --- LA LÍNEA MÁGICA QUE ARREGLA EL PERMISO DENEGADO ---
+RUN chmod +x ./mvnw
+
+# Descargamos dependencias
 RUN ./mvnw dependency:go-offline
 # Copiamos el código fuente
 COPY src ./src
